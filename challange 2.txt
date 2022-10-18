@@ -1,0 +1,18 @@
+import boto3
+import json
+
+ec2_server = boto3.client('ec2')
+
+response = ec2_server.describe_instances()
+
+print(json.dumps(response, indent=2, default=str))
+
+
+----------------------------------------------------------------------
+
+curl http://169.254.169.254/latest/meta-data >> /home/meta-data.txt
+for i in $(</home/meta-data.txt)
+do
+curl http://169.254.169.254/latest/meta-data/$i| jq -Rs 'split("\n")'|split(":") >> /home/meta-value.txt
+done
+
